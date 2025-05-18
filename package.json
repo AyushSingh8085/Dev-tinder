@@ -1,0 +1,19 @@
+{
+  "name": "devtinder",
+  "version": "1.0.0",
+  "description": "Tinder like application for developers",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon src/app.js"
+  },
+  "keywords": [
+    "nodejs",
+    "javascript"
+  ],
+  "author": "Ayush Singh",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
