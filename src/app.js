@@ -8,8 +8,19 @@ const PORT = 7777;
 //   res.send("Hello World");
 // });
 
-app.use("/test/2", (req, res) => {
-  res.send("Hello World");
+app.get("/user", (req, res) => {
+  res.send({
+    firstname: "Ayush",
+    lastname: "singh",
+  });
+});
+
+app.post("/user", (req, res) => {
+  res.send("Posted the user");
+});
+
+app.delete("/user", (req, res) => {
+  res.send("Deleted the user");
 });
 
 app.use("/test", (req, res) => {
