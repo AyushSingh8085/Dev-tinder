@@ -8,6 +8,10 @@ const PORT = 7777;
 //   res.send("Hello World");
 // });
 
+app.use("/test/2", (req, res) => {
+  res.send("Hello World");
+});
+
 app.use("/test", (req, res) => {
   res.send("Hello World");
 });
