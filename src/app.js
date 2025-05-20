@@ -3,9 +3,20 @@ const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
 const PORT = 7777;
-const { adminAuth } = require("./middlewares/auth");
+// const { adminAuth } = require("./middlewares/auth");
 
-app.use("/admin", adminAuth);
+app.get("/getUserData", (req, res) => {
+  throw new Error("ewfwefe");
+  res.send("User data sent");
+});
+
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("Something went wrong");
+  }
+});
+
+// app.use("/admin", adminAuth);
 
 app.post("/signup", async (req, res) => {
   try {
@@ -28,13 +39,9 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.get("/admin/getAllData", (req, res, next) => {
-  res.send("Route Handler 1");
-});
-
-app.get("/admin/deleteData", adminAuth, (req, res, next) => {
-  res.send("Route Handler 2");
-});
+// app.get("/admin/deleteData", adminAuth, (req, res, next) => {
+//   res.send("Route Handler 2");
+// });
 
 connectDB()
   .then(() => {
