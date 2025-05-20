@@ -25,6 +25,31 @@ app.post("/signup", async (req, res) => {
   }
 });
 
+app.use(
+  "/user",
+  (req, res, next) => {
+    // res.send("Route Handler 1");
+    next();
+  },
+  [
+    (req, res, next) => {
+      // res.send("Route Handler 2");
+      next();
+    },
+    (req, res, next) => {
+      // res.send("Route Handler 3");
+      next();
+    },
+  ],
+  (req, res, next) => {
+    // res.send("Route Handler 4");
+    next();
+  },
+  (req, res, next) => {
+    res.send("Route Handler 5");
+  }
+);
+
 connectDB()
   .then(() => {
     console.log("Database connected successfully");
