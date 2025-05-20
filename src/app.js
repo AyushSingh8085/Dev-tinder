@@ -3,6 +3,9 @@ const connectDB = require("./config/database");
 const app = express();
 const User = require("./models/user");
 const PORT = 7777;
+const { adminAuth } = require("./middlewares/auth");
+
+app.use("/admin", adminAuth);
 
 app.post("/signup", async (req, res) => {
   try {
@@ -25,30 +28,13 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-app.use(
-  "/user",
-  (req, res, next) => {
-    // res.send("Route Handler 1");
-    next();
-  },
-  [
-    (req, res, next) => {
-      // res.send("Route Handler 2");
-      next();
-    },
-    (req, res, next) => {
-      // res.send("Route Handler 3");
-      next();
-    },
-  ],
-  (req, res, next) => {
-    // res.send("Route Handler 4");
-    next();
-  },
-  (req, res, next) => {
-    res.send("Route Handler 5");
-  }
-);
+app.get("/admin/getAllData", (req, res, next) => {
+  res.send("Route Handler 1");
+});
+
+app.get("/admin/deleteData", adminAuth, (req, res, next) => {
+  res.send("Route Handler 2");
+});
 
 connectDB()
   .then(() => {
