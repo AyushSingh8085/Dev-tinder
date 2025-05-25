@@ -5,31 +5,19 @@ const User = require("./models/user");
 const PORT = 7777;
 // const { adminAuth } = require("./middlewares/auth");
 
+app.use(express.json());
+
 app.get("/getUserData", (req, res) => {
   throw new Error("ewfwefe");
   res.send("User data sent");
 });
 
-app.use("/", (err, req, res, next) => {
-  if (err) {
-    res.status(500).send("Something went wrong");
-  }
-});
-
-// app.use("/admin", adminAuth);
-
 app.post("/signup", async (req, res) => {
   try {
-    const userObj = {
-      firstName: "Tom",
-      lastName: "Cruise",
-      password: "tom@123",
-      emailId: "tom@gmail.com",
-      // age: 22,
-    };
+    const data = req.body;
 
     // Creating a new instance of the user model
-    const user = new User(userObj);
+    const user = new User(data);
 
     await user.save();
 
@@ -39,9 +27,11 @@ app.post("/signup", async (req, res) => {
   }
 });
 
-// app.get("/admin/deleteData", adminAuth, (req, res, next) => {
-//   res.send("Route Handler 2");
-// });
+app.use("/", (err, req, res, next) => {
+  if (err) {
+    res.status(500).send("Something went wrong");
+  }
+});
 
 connectDB()
   .then(() => {
