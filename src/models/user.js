@@ -70,6 +70,8 @@ const userSchema = mongoose.Schema(
   }
 );
 
+userSchema.index({ firstName: 1, lastName: 1 }, { unique: true });
+
 userSchema.methods.getJWT = async function () {
   const user = this;
 
