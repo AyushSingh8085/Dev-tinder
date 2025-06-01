@@ -6,7 +6,8 @@ const userAuth = async (req, res, next) => {
     const { token } = req.cookies;
 
     if (!token) {
-      throw new Error("Token is not valid");
+      // throw res.status(401).send("Please login!");
+      throw new Error();
     }
 
     const decodedObj = await jwt.verify(token, "DevTinder@123");
@@ -22,7 +23,15 @@ const userAuth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (error) {
-    res.status(400).send("ERROR: " + error.message);
+    if (error.name === "TokenExpiredError") {
+      return res
+        .status(401)
+        .json({ error: "TokenExpiredError", message: "JWT token has expired" });
+    } else {
+      return res
+        .status(401)
+        .json({ error: "InvalidToken", message: "JWT token is invalid" });
+    }
   }
 };
 
