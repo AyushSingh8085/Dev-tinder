@@ -29,26 +29,26 @@ const initializeSocket = (server) => {
         try {
           const roomId = getSecretRoomId(userId, targetUserId);
 
-          // const result = ConnectionRequestModel.findOne({
-          //   $or: [
-          //     {
-          //       fromUserId: userId,
-          //       toUserId: targetUserId,
-          //       status: "accepted",
-          //     },
-          //     {
-          //       fromUserId: targetUserId,
-          //       toUserId: userId,
-          //       status: "accepted",
-          //     },
-          //   ],
-          // });
+          const result = ConnectionRequestModel.findOne({
+            $or: [
+              {
+                fromUserId: userId,
+                toUserId: targetUserId,
+                status: "accepted",
+              },
+              {
+                fromUserId: targetUserId,
+                toUserId: userId,
+                status: "accepted",
+              },
+            ],
+          });
 
-          // if (!result) {
-          //   return res.status(400).json({
-          //     message: "User is not your connection",
-          //   });
-          // }
+          if (!result) {
+            return res.status(400).json({
+              message: "User is not your connection",
+            });
+          }
 
           let chat = await Chat.findOne({
             participants: { $all: [userId, targetUserId] },
