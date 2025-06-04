@@ -25,7 +25,7 @@ const initializeSocket = (server) => {
 
     socket.on(
       "sendMessage",
-      async ({ firstName, userId, targetUserId, text }) => {
+      async ({ firstName, userId, lastName, targetUserId, text }) => {
         try {
           const roomId = getSecretRoomId(userId, targetUserId);
 
@@ -70,6 +70,7 @@ const initializeSocket = (server) => {
 
           io.to(roomId).emit("messageReceived", {
             firstName,
+            lastName,
             text,
             _id: userId,
             timeStamp: new Date(),
